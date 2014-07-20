@@ -91,7 +91,7 @@ path=/var/hda/files/movies
 # You can have more than one share
 #[MyTelevision]
 #type=video
-#path=d:\television
+#path=/var/hda/files/tv
 
 [Music]
 type = music
