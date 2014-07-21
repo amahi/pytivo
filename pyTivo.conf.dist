@@ -86,17 +86,9 @@ type=video
 # Path is the full path to your files (No trailing slash needed)
 # For windows: path=c:\videos
 # For linux:   path=/media
-path=/var/hda/files/movies
+path=/home/armooo/Videos
 
 # You can have more than one share
 #[MyTelevision]
 #type=video
-#path=/var/hda/files/tv
-
-[Music]
-type = music
-path = /var/hda/files/music
-
-[Pictures]
-type = photo
-path = /var/hda/files/pictures
+#path=d:\television
