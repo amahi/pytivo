@@ -1,0 +1,87 @@
+PyTivo Video Manager - change log
+Version 2.0c - 10/2/2011
+- added logic to sort root directory - either sort physical shares and virtual shares separately or together
+- fixed bug that did not allow cache to be dynamically built a second time
+
+Version 2.0d - 10/27/2011
+- added an option usefileid, default true, to turn off the file uniqueness checking which can be expensive under windows
+
+Version 2.0e - 10/28/2011
+- fixed a bug in that prevented virtual share attributes from being parsed
+correctly from the vidmgr.ini file
+- added the alpha virtual share type
+- added the shares= option to the vidmgi.ini to limit virtual shares to a list
+of pytivo shares
+
+Version 2.0f - 11/16/2011
+- changed implementation of harvesters to use subclassing
+- minor changes to the subtitle when grouping is being used
+- fixed bug reported by bwall23 where port number was not successfully retrieved from pytivo config file
+
+Version 2.0g - 11/17/2011
+- added __fileName and __filePath as automatic metadata items.  These are also in the default ignore list so 
+they don't show up in the info view.  If you want to see them, you need to redefine metaignore (in vidmgr.ini)
+to NOT include these names
+- Fixed the sorting logic that caused titles like "Alien" to sort AFTER "Alien 3"
+- added new vidmgr.ini option - ignorearticle - that will ignore an article (the, a, or an) at the beginning of a title.
+Thus, "The Abyss" will sort with the A's instead of the T's.  The default value of this is True so this new behavior
+will occur unless you change it to False.  This also affects alpha virtual shares: The Abyss will be included with the 
+A's and not with the T's 
+
+Version 2.0h - 11/23/2011
+- corrected error in object constructor routine - reported on TCF by Lrhorer
+
+Version 2.0i - 11/29/2011
+- added thumbfolderfn to ini file with a default value of 'folder.jpg' - allows you to change the name of the folder file
+
+Version 2.1 - 2/4/2012
+- fixed major bug found by cweb.  There were actually 2 bugs.
+    1) The cache was being built incorrectly - references by virtual shares were not being properly accounted for.  This problem
+    would actually solve itself if the cache was written to disk and then read back, but if the cache was built dynamically, 
+    this "correction" did not happen.  As a result, files could be deleted even though there were multiple references, which
+    brings us to the second bug:
+    2) The logic to see if a file was deletable was wrong.  I was attempting to prevent deletion of a file that had multiple
+    links (logical or physical) just to keep things simple for myself.  Instead I prevented deletion if there were multiple references.
+    Since virtual shares create additional references to the same file, this virtually precluded deleting most files.  The logic was
+    fixed to be based on whether or not there are multiple file system links.
+    
+Version 2.1a - 1/19/2012
+- added tagorder configuration parameter to specify a separate sort order for virtual share tags as opposed to videos
+
+Version 2.1b - 4/23/2012
+- fixed a bug reported by Larrs - when selecting a tivo from a list with more that 1 page's worth, pagination was not handled correctly
+
+6/24/2012 - without renumbering release - I added the -v option to BuildCache.py to receive additional information about the cache
+build process to help debug metadata issues - as requested by lrhorer.
+
+Version 2.1c - 8/24/2012
+- added a feature that records the pushdate into the meta data and optionally writes it out to the meta file
+
+Version 2.2 - 12/3/2012
+- added the ability to have artwork/thumbnail images for virtual shares (and physical shares) and for the subtending directories
+
+Version 2.2a - 4/10/2013
+- added a new config option, sorttivosbyname.  If set to true (the default) tivos will be listed in
+	alphabetical order by their name.  If false, they will be in the numeric order in which they are
+	listed in the ini file
+	
+Version 2.2b - 4/24/2013
+- added a new grouping item - alpha - to break virtual shares into folders based on the first character of their title item.  Also 
+  allowed  grouping with a list that had been previously disallowed.
+  
+ Version 2.2c - 5/8/2013
+ - fix a bug that caused a crash when pushing a video if the sortroot option is True and a virtual
+ share sorts into the first position
+ - added the name(s) of tivo's pushed to when adding push data to the meta file.  Changed setting savepushdate to savepushdata
+ to encompass this additional functionality, but retained the name savepushdate for backward compatability.  The names are synonyms.
+ 
+ Version 2.2d - 6/15/2013
+ - fixed a bug related to the 2.2c fix when pushing a video
+ 
+ Version 2.2e - 5/4/2014
+ - fixed improper handling if integer metadata - specifically the episode number of a DVD title
+ - fixed DVD Share sorting - it now properly sorts on the sort specification instead of the display spec
+ - fixed improper parsing of Virtual Shares - was not recognizing 'display' settings
+ 
+ Version 2.2f - 5/18/2013
+ - added a new ini file option - metamergeparent (default false) to control whether or not to look upward in the path for parent metadata files.
